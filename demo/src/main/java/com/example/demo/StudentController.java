@@ -1,27 +1,40 @@
 package com.example.demo;
 
-
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 //API LAYER
 @RestController
 @RequestMapping(path = "api/v1/student") //localhost:8080/api/v1/student
 public class StudentController { //all resources for API
 	
 	//Create reference of StudentService
-		
-		private final StudentService studentService;
-		
-		public StudentController(StudentService studentService) {
-			this.studentService = studentService;
-		}
-		
-		@GetMapping
-		public List<Student> getStudents(){
-			return studentService.getStudents();
-		}
+
+    private final StudentService studentService;
+
+    //Below is the bad implemention
+    /*
+    public StudentController(StudentService studentService) {
+        this.studentService = new StudentService(); //trying to add an instance of student service
+    }*/
+
+     //This is dependency injection, it "magically" instantiates studentService and injected into the constructor
+               // Now we have have to explicitly say that StudentService has to be instantiated by putting @Service before it
+               //Which labels it as a spring bean
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @GetMapping
+    public List<Student> getStudents(){
+        return studentService.getStudents();      
+    }
 		
 }
+
