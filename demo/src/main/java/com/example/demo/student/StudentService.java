@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Service
+@Service //@Component and @Service are the same, but different for Semantics
 public class StudentService {
-        //BUSINESS LOGIC
+        //BUSINESS LOGIC - SERVICE LAYER
     //to have this method to be served as a RESTFUL Endpoint
             /*@GetMapping 
             public String hello() {

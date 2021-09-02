@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 //API LAYER
 @RestController
 @RequestMapping(path = "api/v1/students") //localhost:8080/api/v1/student
-public class StudentController { //all resources for API
+public class StudentController { //all resources for API - API LAYER
 	
 	//Create reference of StudentService
 
