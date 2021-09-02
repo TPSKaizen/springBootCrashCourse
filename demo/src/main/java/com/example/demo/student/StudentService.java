@@ -27,6 +27,11 @@ public class StudentService {
        
     } // this returns an array of objects generated in the code and not from the database
 
+	public void addNewStudents(Student student) {
+		// TODO Auto-generated method stub
+		System.out.println(student);
+	}
+
 }
 
 //GET METHOD without using database

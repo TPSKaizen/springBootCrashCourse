@@ -1,6 +1,7 @@
 package com.example.demo.student;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 
 //To map student to database we have to add :
 // @Entity (for Hibernate) , @Table (For table in DB), @Id, @SequenceGenerator, @GeneratedValue
@@ -32,23 +35,25 @@ public class Student {
 	private String name;
 	private String email;
 	private LocalDate dob;
+	@Transient
 	private int age;
+	//We are making age transient because it can be calculated from DoB
+	//Transient means age won't be put in the database, so it doesn't have to be in any constructors
+	//So it has to be calculated, we do this in its age's getter function
 	
 	//Constructor with all elements 
-	public Student(Long id, String name, String email, LocalDate dob, int age) {
+	public Student(Long id, String name, String email, LocalDate dob) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.dob = dob;
-		this.age = age;
 	}
 	
 	//Constructor without ID because DB will generate IDs
-	public Student(String name, String email, LocalDate dob, int age) {
+	public Student(String name, String email, LocalDate dob) {
 		this.name = name;
 		this.email = email;
 		this.dob = dob;
-		this.age = age;
 	}
 	
 
@@ -94,7 +99,7 @@ public class Student {
 	}
 
 	public int getAge() {
-		return age;
+		return Period.between(this.dob, LocalDate.now()).getYears();
 	}
 
 	public void setAge(int age) {
