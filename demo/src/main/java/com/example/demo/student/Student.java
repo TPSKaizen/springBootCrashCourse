@@ -50,7 +50,11 @@ public class Student {
 		this.dob = dob;
 		this.age = age;
 	}
+	
 
+	public Student() {
+		super();
+	}
 
 	@Override
 	public String toString() {
