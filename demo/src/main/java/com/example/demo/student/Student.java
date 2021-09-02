@@ -10,7 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 //To map student to database we have to add :
-// @Entity (for Hibernate) , @Table (For table in DB)
+// @Entity (for Hibernate) , @Table (For table in DB), @Id, @SequenceGenerator, @GeneratedValue
 
 @Entity
 @Table
