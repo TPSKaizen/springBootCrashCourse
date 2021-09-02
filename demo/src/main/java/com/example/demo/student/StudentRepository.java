@@ -17,5 +17,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	@Query("SELECT s from Student s WHERE s.email = ?1")
 	// First s is an alias
 	// Student s refers to an instance of Student class
+	//For custom functions we use Optional
 	Optional<Student> findStudentByEmail(String email);
 }

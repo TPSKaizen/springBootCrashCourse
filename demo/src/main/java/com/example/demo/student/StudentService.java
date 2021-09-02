@@ -31,12 +31,23 @@ public class StudentService {
 	public void addNewStudents(Student student) {
 		// TODO Auto-generated method stub
 		//System.out.println(student); for testing 
+		//Check if student is present via custom function declared in StudentRepo
 		Optional<Student> studentOptional = studentRepo.findStudentByEmail(student.getEmail());
 		if(studentOptional.isPresent()) 
 			throw new IllegalStateException("Email taken");
 		else 
 			studentRepo.save(student);
-		
+	}
+
+	
+	public void deleteStudentById(Long studentId) {
+		// TODO Auto-generated method stub
+		boolean foundId = studentRepo.existsById(studentId);
+		//if it exists
+		if(!foundId) 
+			throw new IllegalStateException("Student with id: " + studentId + " was not found");	
+		else
+			studentRepo.deleteById(studentId);
 	}
 
 }
