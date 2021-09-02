@@ -3,10 +3,12 @@ package com.example.demo.student;
 import java.time.LocalDate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 //@Component and @Service are the same, but different for Semantics
@@ -37,7 +39,7 @@ public class StudentService {
 			throw new IllegalStateException("Email taken");
 		else 
 			studentRepo.save(student);
-	}
+	}		
 
 	
 	public void deleteStudentById(Long studentId) {
@@ -48,6 +50,28 @@ public class StudentService {
 			throw new IllegalStateException("Student with id: " + studentId + " was not found");	
 		else
 			studentRepo.deleteById(studentId);
+	}
+	
+	@Transactional //This allows us to not have to use jpql queries
+	public void updateStudent(Long SID, String name, String email) {
+		Student student = studentRepo.findById(SID)
+				.orElseThrow( () -> new IllegalStateException("Student with id: " + SID+ " was not found") );
+		
+		//If not null, length greater than 0, name not the same as current name, THEN overwrite it
+		if(name != null && name.length() > 0 && !Objects.equals(student.getName(), name)) {
+			student.setName(name);
+		}
+		
+		//If not null, length greater than 0, email not the same as current email, THEN overwrite it
+		if(email != null && email.length() > 0 && !Objects.equals(student.getName(), email)) {
+			//Check to see if email is already taken
+			Optional<Student> studentOptional = studentRepo.findStudentByEmail(email);
+			if(studentOptional.isPresent()) {
+				//if it is, throw exception
+				throw new IllegalStateException("Email taken");
+			} else //else set email
+				student.setEmail(email);
+		}
 	}
 
 }

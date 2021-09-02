@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -54,6 +56,14 @@ public class StudentController { //all resources for API - API LAYER
     	//grab the idea via the @PathVariable and naming it in accordance to its declared variable type in Student.java
     	studentService.deleteStudentById(studentId);
     }
+    
+    @PutMapping(path = "{SID}")
+    public void updateStudent(@PathVariable("SID") Long SID,
+    						  @RequestParam(required = false) String name,
+    						  @RequestParam (required = false) String email) {
+    	studentService.updateStudent(SID, name, email);
+    }
+    
 		
 }
 
