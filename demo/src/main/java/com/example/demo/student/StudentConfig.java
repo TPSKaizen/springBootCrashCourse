@@ -9,7 +9,7 @@ import java.util.List;
 
 @Configuration
 public class StudentConfig {
-	
+//This happens everytime the server starts
 	@Bean
 	CommandLineRunner commandLineRunner(StudentRepository repository) {
 		return args -> {
